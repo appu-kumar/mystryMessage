@@ -70,6 +70,6 @@ const UserSchema: Schema<User> = new Schema({
 });
 
 
-const userModel=(mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User",UserSchema)       // second wala part tab banega jab database me schema na ho ok
+const userModel=(mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User",UserSchema)       // second wala part tab banega jab database me schema na ho ok   userModel is like a class of the java object banao aur kya kuchh function bhi deta hai like save, findOne, updateOne etc.
 
 export default userModel;
