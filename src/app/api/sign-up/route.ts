@@ -1,4 +1,4 @@
-// import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import bcrypt from "bcryptjs";
 import userModel from "@/model/User";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
@@ -6,6 +6,9 @@ import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 export async function POST(request: Request) {
   // No need to write response:Response because next.js is serverless framework, for response create your own response using new Response()
   try {
+
+    await dbConnect();
+
     const { username, email, password } = await request.json();
 
     const existingUserVerifiedByUsername = await userModel.findOne({
@@ -28,19 +31,20 @@ export async function POST(request: Request) {
     const exisitingUserByEmail = await userModel.findOne({ email });
 
     if (exisitingUserByEmail) {
-        if(exisitingUserByEmail.isVerified){
-            return Response.json({
-                success:false,
-                message:"User is verified with email"
-            },{status:400})
-        }
-       else{
-           exisitingUserByEmail.password=hashedPassword;
-           exisitingUserByEmail.verifyCode=verifyCode;
-           exisitingUserByEmail.isVerified=true;
-           exisitingUserByEmail.verifyCodeExpiry=expiryDate;
-           await exisitingUserByEmail.save();
-       }
+      if (exisitingUserByEmail.isVerified) {
+        return Response.json(
+          {
+            success: false,
+            message: "User is verified with email",
+          },
+          { status: 400 }
+        );
+      } else {
+        exisitingUserByEmail.password = hashedPassword;
+        exisitingUserByEmail.verifyCode = verifyCode;
+        exisitingUserByEmail.verifyCodeExpiry = expiryDate;
+        await exisitingUserByEmail.save();
+      }
     } else {
       const newUser = new userModel({
         username,
@@ -77,7 +81,10 @@ export async function POST(request: Request) {
 
     // on success
     return Response.json(
-      { success: true, message: "User register successfully, Please verify your email!" },
+      {
+        success: true,
+        message: "User register successfully, Please verify your email!",
+      },
       { status: 201, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
