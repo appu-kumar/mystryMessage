@@ -8,7 +8,7 @@ import { useDebounceCallback } from "usehooks-ts"; // using only for debouncing
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
   Form,
   FormControl,
@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { signUpSchema } from "@/schemas/signUpSchema";
+import { ApiResponse } from "@/types/ApiResponse";
 
 const page = () => {
   const [username, setUsername] = useState(""); // this will store the username when user type
@@ -36,7 +37,7 @@ const page = () => {
 
   // Zod implementation
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const form = useForm({
+  const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema), // integrate zod schema
     defaultValues: {
       username: "",
@@ -44,6 +45,7 @@ const page = () => {
       password: "",
     },
   });
+  
 
   /// checking username unique or not
   useEffect(() => {
@@ -73,10 +75,9 @@ const page = () => {
 
   // form me jo onsubmit use hota hai wo hai okay
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
-    console.log("hi coming");
     setIsSubmitting(true);
     try {
-      const response = await axios.post("api/sign-up", data);
+      const response = await axios.post("/api/sign-up", data);
       toast({
         title: "success",
         description: response.data.message,
@@ -84,10 +85,11 @@ const page = () => {
       router.replace(`/verify/${username}`);
       setIsSubmitting(false);
     } catch (error) {
+      const axiosError = error as AxiosError<ApiResponse>  
       console.log("Error in signup of user", error);
       toast({
         title: "Signup failed",
-        description: "Failed in signup",
+        description:axiosError.message,
         variant: "destructive",
       });
       setIsSubmitting(false);
