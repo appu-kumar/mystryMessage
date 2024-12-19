@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signInSchema } from "@/schemas/signInSchema";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 const page = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -104,6 +105,15 @@ const page = () => {
             <Button type="submit">Sign in</Button>
           </form>
         </Form>
+
+        <div className="text-center mt-4">
+          <p>
+            Are you new User?{" "}
+            <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
+              Signup
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
