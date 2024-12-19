@@ -16,16 +16,18 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "text", placeholder: "message@example.com" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials:any): Promise<any> {
+      authorize: async(credentials:any): Promise<any> =>{
+
+        console.log("dance")
         await dbConnect();
         try {
-          const user = await userModel.findOne({
-            $or: [
-              { email: credentials.identifier.email },
-              { password: credentials.identifier.password },
-            ],
-          });
 
+          console.log('dance')
+          const user = await userModel.findOne(
+              { email: credentials.identifier },
+          );
+
+          console.log('oye', user.username, user.password)
           if (!user) {
             throw new Error("No user found with this email");
           }

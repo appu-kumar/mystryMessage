@@ -43,16 +43,18 @@ const page = () => {
           description:"Incorrect username or password",
           variant:"destructive"
         })
-       }else{
-        toast({
-          title:"Login Failed",
-          description:"Incorrect username or password",
-          variant:"destructive"
-        })
+        return;
        }
 
        if(result?.url){
         router.replace("/dashboard");
+       }
+       else{
+        toast({
+          title:"Login Failed",
+          description:"Url is incorrect",
+          variant:"destructive"
+        })
        }
   
   };
