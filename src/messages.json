@@ -2,27 +2,27 @@
     {
       "title": "Meeting Reminder",
       "content": "Don't forget about the team meeting scheduled for tomorrow at 10 AM.",
-      "received": "2024-12-19T09:00:00Z"
+      "received_time": "2024-12-19T09:00:00Z"
     },
     {
       "title": "Project Update",
       "content": "The client has approved the initial designs. Let's proceed with the next phase.",
-      "received": "2024-12-18T14:30:00Z"
+      "received_time": "2024-12-18T14:30:00Z"
     },
     {
       "title": "Holiday Notice",
       "content": "The office will be closed on December 25th and 26th for the holidays.",
-      "received": "2024-12-17T12:00:00Z"
+      "received_time": "2024-12-17T12:00:00Z"
     },
     {
       "title": "System Maintenance",
       "content": "Scheduled maintenance will occur on December 20th between 1 AM and 5 AM. Services may be disrupted.",
-      "received": "2024-12-16T16:45:00Z"
+      "received_time": "2024-12-16T16:45:00Z"
     },
     {
       "title": "Weekly Newsletter",
       "content": "Here's your weekly newsletter with updates on company events and achievements.",
-      "received": "2024-12-15T08:00:00Z"
+      "received_time": "2024-12-15T08:00:00Z"
     }
   ]
   
